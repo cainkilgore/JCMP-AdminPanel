@@ -5,10 +5,9 @@ local adminId = "STEAM_0:0:34582370"
 
 -- Change this value to whatever your STEAM ID is! (Type /id in-game)
 
-local admins = {
-				"STEAM_0:0:34582370", -- Cain
-				"STEAM_ANONYMOUS"
-				}
+local admins = { }
+				
+local admincount = 0
 
 local invalidArgs = "You have entered invalid arguments."
 local nullPlayer = "That player does not exist."
@@ -50,6 +49,31 @@ local adminKillReward = true
 -- /online
 -- /sky
 
+function admin:loadAdmins(filename)
+	local file = io.open(filename, "r")
+	local i = 0
+
+	if file == nil then
+		print("admins were not found!!")
+		return
+	end
+	
+	for line in file:lines() do
+		i = i + 1
+		admins[i] = line
+	end
+	file:close()
+	
+end
+
+function admin:__init()
+    Events:Subscribe( "PlayerChat", self, self.PlayerChat )
+	Events:Subscribe( "PlayerJoin", self, self.PlayerJoin )
+	Events:Subscribe( "PlayerQuit", self, self.PlayerQuit )
+	Events:Subscribe( "PlayerDeath", self, self.PlayerDeath )
+	self:loadAdmins("server/admins.txt")
+end
+
 function isAdmin( player )
 	local adminstring = ""
 	for i,line in ipairs(admins) do
@@ -61,13 +85,6 @@ function isAdmin( player )
 	end
 	
 	return false
-end
-
-function admin:__init()
-    Events:Subscribe( "PlayerChat", self, self.PlayerChat )
-	Events:Subscribe( "PlayerJoin", self, self.PlayerJoin )
-	Events:Subscribe( "PlayerQuit", self, self.PlayerQuit )
-	Events:Subscribe( "PlayerDeath", self, self.PlayerDeath )
 end
 
 function admin:PlayerJoin( args )
