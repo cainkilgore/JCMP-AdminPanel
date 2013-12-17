@@ -1,7 +1,6 @@
 class 'admin'
 
 local adminPrefix = "[Owner] "
-local adminId = "STEAM_0:0:34582370"
 
 -- Change this value to whatever your STEAM ID is! (Type /id in-game)
 
