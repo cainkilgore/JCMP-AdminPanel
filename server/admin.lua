@@ -252,10 +252,10 @@ function admin:PlayerChat( args )
 		else
 			args.player:SendChatMessage(notEnoughMoneyKill, Color(255, 0, 0))
 		end
-				
-		if(cmd_args[1]) == "/id" then
+	end
+	
+	if(cmd_args[1]) == "/id" then
 		args.player:SendChatMessage(steamID .. tostring(args.player:GetSteamId()), Color(255, 255, 255))
-		end
 	end
 	
 	if(cmd_args[1]) == "/ptp" then
