@@ -31,6 +31,9 @@ local showJoin = true
 local showLeave = true
 local adminKillReward = true
 
+
+local timerMessage = ""
+
 -- Cain's Admin Commands and Functions
 -- Version: 0.0.0.5
 
@@ -322,7 +325,7 @@ function admin:PlayerChat( args )
 	
 	if(isAdmin(args.player)) then
 		local text = args.text
-		if not string.match(text, "/") then
+		if not string.sub(text, 1, 1) ~= "/" then
 			Chat:Broadcast(adminPrefix .. args.player:GetName() .. ": " .. text, Color(255, 48, 48))
 			return false
 		end
