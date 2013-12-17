@@ -124,7 +124,7 @@ function admin:PlayerChat( args )
 		
     local cmd_args = args.text:split( " " )
 	
-	if(tostring(args.player:GetSteamId()) == adminId) then
+	if(isAdmin(args.player)) then
 		if(cmd_args[1]) == "/kick" then
 			if #cmd_args < 1 then
 				args.player:SendChatMessage(invalidArgs, Color(255,255,0))
@@ -209,7 +209,7 @@ function admin:PlayerChat( args )
 		end
 		
 		if #cmd_args > 1 then
-			if(tostring(args.player:GetSteamId()) == adminId) then
+			if(isAdmin(args.player)) then
 				local player = Player.Match(cmd_args[2])[1]
 				if not IsValid(player) then
 					args.player:SendChatMessage(nullPlayer, Color(255, 0, 0))
@@ -293,7 +293,7 @@ function admin:PlayerChat( args )
 			args.player:SendChatMessage("Weee!", Color(255, 0, 0))
 			return true
 		else 
-			if(tostring(args.player:GetSteamId()) == adminId) then
+			if(isAdmin(args.player)) then
 				local player = Player.Match(cmd_args[2])[1]
 				if not IsValid(player) then
 					args.player:SendChatMessage(nullPlayer)
@@ -320,7 +320,7 @@ function admin:PlayerChat( args )
 		end
 	end
 	
-	if(tostring(args.player:GetSteamId()) == adminId) then
+	if(isAdmin(args.player)) then
 		local text = args.text
 		if not string.match(text, "/") then
 			Chat:Broadcast(adminPrefix .. args.player:GetName() .. ": " .. text, Color(255, 48, 48))
