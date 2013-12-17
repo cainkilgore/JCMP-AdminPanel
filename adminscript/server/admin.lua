@@ -50,6 +50,20 @@ local adminKillReward = true
 -- /online
 -- /sky
 
+function isAdmin( player )
+	local adminstring = ""
+	for i,line in ipairs(admins) do
+		adminstring = adminstring .. line .. " "
+	end
+
+	if(string.match(adminstring, tostring(player:GetSteamId())) then
+		return true
+	end
+
+	return false
+	end
+end
+
 function admin:__init()
     Events:Subscribe( "PlayerChat", self, self.PlayerChat )
 	Events:Subscribe( "PlayerJoin", self, self.PlayerJoin )
