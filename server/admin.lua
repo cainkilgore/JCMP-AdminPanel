@@ -32,7 +32,7 @@ local showLeave = true
 local adminKillReward = true
 
 -- Cain's Admin Commands and Functions
--- Version: 0.0.0.3
+-- Version: 0.0.0.4
 
 -- Available Commands:
 -- /kill
