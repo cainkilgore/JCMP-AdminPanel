@@ -325,7 +325,7 @@ function admin:PlayerChat( args )
 	
 	if(isAdmin(args.player)) then
 		local text = args.text
-		if not string.sub(text, 1, 1) ~= "/" then
+		if string.sub(text, 1, 1) ~= "/" then
 			Chat:Broadcast(adminPrefix .. args.player:GetName() .. ": " .. text, Color(255, 48, 48))
 			return false
 		end
