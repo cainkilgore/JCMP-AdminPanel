@@ -2,7 +2,13 @@ class 'admin'
 
 local adminPrefix = "[Owner] "
 local adminId = "STEAM_0:0:34582370"
+
 -- Change this value to whatever your STEAM ID is! (Type /id in-game)
+
+local admins = {
+				"STEAM_0:0:34582370", -- Cain
+				"STEAM_ANONYMOUS"
+				}
 
 local invalidArgs = "You have entered invalid arguments."
 local nullPlayer = "That player does not exist."
