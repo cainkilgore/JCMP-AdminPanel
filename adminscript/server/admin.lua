@@ -56,12 +56,11 @@ function isAdmin( player )
 		adminstring = adminstring .. line .. " "
 	end
 
-	if(string.match(adminstring, tostring(player:GetSteamId())) then
+	if(string.match(adminstring, tostring(player:GetSteamId()))) then
 		return true
 	end
-
+	
 	return false
-	end
 end
 
 function admin:__init()
@@ -69,8 +68,6 @@ function admin:__init()
 	Events:Subscribe( "PlayerJoin", self, self.PlayerJoin )
 	Events:Subscribe( "PlayerQuit", self, self.PlayerQuit )
 	Events:Subscribe( "PlayerDeath", self, self.PlayerDeath )
-	
-	
 end
 
 function admin:PlayerJoin( args )
@@ -295,6 +292,14 @@ function admin:PlayerChat( args )
 				args.player:SendChatMessage(invalidPermissions, Color(255, 0, 0))
 				return true
 			end
+		end
+	end
+	
+	if(cmd_args[1]) == "/test" then
+		if(isAdmin(args.player)) then
+			args.player:SendChatMessage("It worked!", Color(255, 0, 0))
+		else 
+			args.player:SendChatMessage("No permission. Dangit.", Color(255, 0, 0))
 		end
 	end
 	
