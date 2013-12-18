@@ -12,6 +12,7 @@ local invalidArgs = "You have entered invalid arguments."
 local nullPlayer = "That player does not exist."
 local kicked = " has been kicked from the server."
 local moneyset = " money has been set to $"
+local moneyadd = " money has been added to $"
 local inVehicle = "You must be inside a vehicle."
 local playerInVehicle = "That player is now inside your vehicle."
 local playerTele = " teleported you to them."
@@ -35,7 +36,7 @@ local adminKillReward = true
 local timerMessage = ""
 
 -- Cain's Admin Commands and Functions
--- Version: 0.0.0.5
+-- Version: 0.0.0.6
 
 -- Available Commands:
 -- /kill
@@ -50,6 +51,7 @@ local timerMessage = ""
 -- /ptp <player>
 -- /online
 -- /sky
+-- /addmoney <player> <amount> (ADMIN)
 
 function admin:loadAdmins(filename)
 	local file = io.open(filename, "r")
@@ -159,6 +161,23 @@ function admin:PlayerChat( args )
 			
 			player:SetMoney(tonumber(cmd_args[3]))
 			args.player:SendChatMessage(cmd_args[2] .. moneyset .. cmd_args[3], Color(255, 0, 0))
+			return true
+		end
+		 -- AddMoney 
+		if(cmd_args[1]) == "/addmoney" then
+			if #cmd_args < 2 then
+				args.player:SendChatMessage(invalidArgs, Color(255, 255, 255))
+				return false
+			end
+			
+			local player = Player.Match(cmd_args[2])[1]
+			if not IsValid(player) then
+				args.player:SendChatMessage(nullPlayer, Color(255, 255, 255))
+				return false
+			end
+			
+			player:SetMoney(player:GetMoney() + tonumber(cmd_args[3]))
+			args.player:SendChatMessage(cmd_args[2] .. moneyadd .. cmd_args[3], Color(255, 0, 0))
 			return true
 		end
 		
