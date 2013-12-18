@@ -32,7 +32,6 @@ local showJoin = true
 local showLeave = true
 local adminKillReward = true
 
-
 local timerMessage = ""
 
 -- Cain's Admin Commands and Functions
@@ -178,6 +177,22 @@ function admin:PlayerChat( args )
 			
 			player:SetMoney(player:GetMoney() + tonumber(cmd_args[3]))
 			args.player:SendChatMessage(cmd_args[2] .. moneyadd .. cmd_args[3], Color(255, 0, 0))
+			return true
+		end
+		
+		if(cmd_args[1]) == "/getmoney" then
+			if #cmd_args < 2 then
+				args.player:SendChatMessage(invalidArgs, Color(255, 0, 0))
+				return false
+			end
+			
+			local player = Player.Match(cmd_args[2])[1]
+			if not IsValid(player) then
+				args.player:SendChatMessage(nullPlayer, Color(255, 0, 0))
+				return false
+			end
+			
+			args.player:SendChatMessage(player:GetName() .. " currently has $" .. player:GetMoney() .. " in their bank.", Color(255, 0, 0))
 			return true
 		end
 		
