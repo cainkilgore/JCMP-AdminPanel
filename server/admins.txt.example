@@ -1,0 +1,11 @@
+-- How to use this file
+-- Add STEAM:0:01245678 etc on each line
+-- Get your Steam ID by typing /id in-game
+
+-- Example:
+
+STEAM:0:0:12345678
+-- ^ Cain
+
+STEAM:0:0:23456789
+-- ^ Abel
