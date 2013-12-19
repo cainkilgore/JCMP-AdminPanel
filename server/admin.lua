@@ -117,7 +117,7 @@ function admin:PlayerDeath ( args )
 				Chat:Broadcast(args.killer:GetName() .. " killed the Admin " .. args.player:GetName() .. ", everyone receives $1,000! (Except them, " ..  args.player:GetName() .. " doesn't like them)", Color(255, 0, 0))
 			end
 		else 
-			if(tostring(args.player:GetSteamId()) == adminId) then
+			if(isAdmin(args.player)) then
 				for p in Server:GetPlayers() do
 					p:SetMoney(p:GetMoney() + 1000)
 				end
@@ -182,6 +182,43 @@ function admin:PlayerChat( args )
 			args.player:SendChatMessage(cmd_args[2] .. moneyadd .. cmd_args[3], Color(255, 0, 0))
 			return true
 		end
+		
+		-- Ban and Unban
+		if(cmd_args[1]) == "/ban" then
+			if #cmd_args < 2 then
+				args.player:SendChatMessage(invalidArgs, Color(255, 0, 0))
+				return false
+			end
+			
+			local player = Player.Match(cmd_args[2])[1]
+			if not IsValid(player) then
+				args.player:SendChatMessage(nullPlayer, Color(255, 0, 0))
+				return false
+			end
+			
+			Chat:Broadcast(player:GetName() .. " has been banned from the server. (" .. player:GetSteamId() .. ")", Color(255, 0, 0))
+			Server:AddBan(player:GetSteamId())
+			return true
+		end
+		
+		if(cmd_args[1]) == "/unban" then
+			if #cmd_args < 2 then
+				args.player:SendChatMessage(invalidArgs, Color(255, 0, 0))
+				return false
+			end
+			
+			local player = cmd_args[2]
+			if not Server:IsBanned(player) then
+				args.player:SendChatMessage("That Steam ID is not currently banned.", Color(255, 0, 0))
+				return false
+			end
+			
+			Chat:Broadcast(player .. " has been unbanned from the server.", Color(255, 0, 0))
+			Server:RemoveBan(player)
+			return true
+		end
+		
+		
 		
 		if(cmd_args[1]) == "/getmoney" then
 			if #cmd_args < 2 then
