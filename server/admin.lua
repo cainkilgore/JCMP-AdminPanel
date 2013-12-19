@@ -196,8 +196,7 @@ function admin:PlayerChat( args )
 				return false
 			end
 			
-			Chat:Send(args.player, player:GetName() .. " has been banned from the server.", Color(255, 0, 0))
-			Chat:Send(args.player, player:GetSteamId(), Color(255, 0, 0))
+			Chat:Send(args.player, player:GetName() .. " has been banned from the server. (" .. tostring(player:GetSteamId()) .. ")", Color(255, 0, 0))
 			-- AddBan(player:GetSteamId())
 			return true
 		end
