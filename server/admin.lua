@@ -64,7 +64,7 @@ function admin:loadAdmins(filename)
 	for line in file:lines() do
 		i = i + 1
 		
-		if string.sub(text, 1, 2) ~= "--" then
+		if string.sub(filename, 1, 2) ~= "--" then
 			admins[i] = line
 			print("Admins Found: " .. line)
 		end
