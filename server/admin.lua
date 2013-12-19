@@ -209,7 +209,7 @@ function admin:PlayerChat( args )
 			end
 			
 			local player = cmd_args[2]
-			if not Server:IsBanned(player) then
+			if not Server:IsBanned(SteamId(player)) then
 				args.player:SendChatMessage("That Steam ID is not currently banned.", Color(255, 0, 0))
 				return false
 			end
