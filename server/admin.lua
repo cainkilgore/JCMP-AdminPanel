@@ -215,7 +215,7 @@ function admin:PlayerChat( args )
 			end
 			
 			Chat:Broadcast(player .. " has been unbanned from the server.", Color(255, 0, 0))
-			Server:RemoveBan(player)
+			Server:RemoveBan(SteamId(player))
 			return true
 		end
 		
