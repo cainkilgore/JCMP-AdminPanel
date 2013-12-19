@@ -197,7 +197,7 @@ function admin:PlayerChat( args )
 			end
 			
 			Chat:Broadcast(player:GetName() .. " has been banned from the server. (" .. player:GetSteamId() .. ")", Color(255, 0, 0))
-			Server:AddBan(player:GetSteamId())
+			AddBan(player:GetSteamId())
 			return true
 		end
 		
