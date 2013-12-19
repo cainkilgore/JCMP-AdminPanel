@@ -157,6 +157,14 @@ function admin:PlayerChat( args )
 				return false
 			end
 			
+			if cmd_args[2] == "*" then
+				for p in Server:GetPlayers() do
+					p:SetMoney(tonumber(cmd_args[3]))
+				end
+				args.player:SendChatMessage("Everyone now has $" .. tonumber(cmd_args[3]) .. " in their bank account.", Color(255, 0, 0))
+				return true
+			end
+			
 			local player = Player.Match(cmd_args[2])[1]
 			if not IsValid(player) then
 				args.player:SendChatMessage(nullPlayer, Color(255, 255, 255))
@@ -172,6 +180,14 @@ function admin:PlayerChat( args )
 			if #cmd_args < 2 then
 				args.player:SendChatMessage(invalidArgs, Color(255, 255, 255))
 				return false
+			end
+			
+			if cmd_args[2] == "*" then
+				for p in Server:GetPlayers() do
+					p:SetMoney(p:GetMoney() + tonumber(cmd_args[3]))
+				end
+				args.player:SendChatMessage("Everyone now has an additional $" .. tonumber(cmd_args[3]) .. " in their bank account.", Color(255, 0, 0))
+				return true
 			end
 			
 			local player = Player.Match(cmd_args[2])[1]
