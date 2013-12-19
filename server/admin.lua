@@ -11,8 +11,8 @@ local admincount = 0
 local invalidArgs = "You have entered invalid arguments."
 local nullPlayer = "That player does not exist."
 local kicked = " has been kicked from the server."
-local moneyset = " money has been set to $"
-local moneyadd = " money has been added to $"
+local moneyset = "'s bank account now has $"
+local moneyadd = "'s bank account got an additional $"
 local inVehicle = "You must be inside a vehicle."
 local playerInVehicle = "That player is now inside your vehicle."
 local playerTele = " teleported you to them."
@@ -51,6 +51,8 @@ local timerMessage = ""
 -- /online
 -- /sky
 -- /addmoney <player> <amount> (ADMIN)
+-- /getmoney <player> (ADMIN)
+-- /ban <player> (ADMIN)
 
 function admin:loadAdmins(filename)
 	local file = io.open(filename, "r")
