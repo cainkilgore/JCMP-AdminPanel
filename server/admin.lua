@@ -364,6 +364,9 @@ function admin:PlayerChat( args )
 		end
 		
 		args.player:Teleport(player:GetPosition(), player:GetAngle())
+		if player:GetVehicle() then
+			args.player:EnterVehicle(player:GetVehicle(), VehicleSeat.Passenger)
+		end
 		args.player:SendChatMessage(playerTeleport .. tostring(player:GetName()), Color(250, 0, 0))
 		player:SendChatMessage(args.player:GetName() .. playerTele2, Color(250, 0, 0))
 		return true
