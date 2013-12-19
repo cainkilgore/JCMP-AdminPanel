@@ -202,25 +202,6 @@ function admin:PlayerChat( args )
 			return true
 		end
 		
-		if(cmd_args[1]) == "/unban" then
-			if #cmd_args < 2 then
-				args.player:SendChatMessage(invalidArgs, Color(255, 0, 0))
-				return false
-			end
-			
-			local player = cmd_args[2]
-			if not Server:IsBanned(SteamId(player)) then
-				args.player:SendChatMessage("That Steam ID is not currently banned.", Color(255, 0, 0))
-				return false
-			end
-			
-			Chat:Broadcast(player .. " has been unbanned from the server.", Color(255, 0, 0))
-			Server:RemoveBan(SteamId(player))
-			return true
-		end
-		
-		
-		
 		if(cmd_args[1]) == "/getmoney" then
 			if #cmd_args < 2 then
 				args.player:SendChatMessage(invalidArgs, Color(255, 0, 0))
