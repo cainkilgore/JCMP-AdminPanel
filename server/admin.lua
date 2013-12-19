@@ -109,7 +109,7 @@ end
 function admin:PlayerDeath ( args )
 	if adminKillReward then
 		if args.killer then
-			if(tostring(args.player:GetSteamId()) == adminId) then
+			if(isAdmin(args.player)) then
 				for p in Server:GetPlayers() do
 					p:SetMoney(p:GetMoney() + 1000)
 				end
