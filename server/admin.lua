@@ -32,7 +32,7 @@ local showJoin = true
 local showLeave = true
 local adminKillReward = true
 
-local timerMessage = ""
+timerAdmin = ""
 
 -- Cain's Admin Commands and Functions
 -- Version: 0.0.0.6
@@ -161,7 +161,7 @@ function admin:PlayerChat( args )
 				for p in Server:GetPlayers() do
 					p:SetMoney(tonumber(cmd_args[3]))
 				end
-				args.player:SendChatMessage("Everyone now has $" .. tonumber(cmd_args[3]) .. " in their bank account.", Color(255, 0, 0))
+				Chat:Broadcast("Everyone now has $" .. tonumber(cmd_args[3]) .. " in their bank account, courtesy of " .. args.player:GetName() .. ".", Color(255, 0, 0))
 				return true
 			end
 			
@@ -186,7 +186,7 @@ function admin:PlayerChat( args )
 				for p in Server:GetPlayers() do
 					p:SetMoney(p:GetMoney() + tonumber(cmd_args[3]))
 				end
-				args.player:SendChatMessage("Everyone now has an additional $" .. tonumber(cmd_args[3]) .. " in their bank account.", Color(255, 0, 0))
+				Chat:Broadcast("Everyone now has an additional $" .. tonumber(cmd_args[3]) .. " in their bank account, courtesy of " .. args.player:GetName() .. ".", Color(255, 0, 0))
 				return true
 			end
 			
@@ -275,6 +275,21 @@ function admin:PlayerChat( args )
 			player:SendChatMessage(args.player:GetName() .. playerTele, Color(255, 0, 0))
 			args.player:SendChatMessage(player:GetName() .. playerTele2, Color(255, 0, 0))
 			return true
+		end
+		
+		if(cmd_args[1]) == "/notice" then
+			if #cmd_args < 2 then
+				args.player:SendChatMessage(invalidArgs, Color(255, 0, 0))
+				return false
+			end
+			
+			local stringname = args.text:sub(9, 256)
+			
+			for p in Server:GetPlayers() do
+				Network:Send(p, "Test", stringname)
+			end
+			
+			timerAdmin = args.player:GetName()
 		end
 	end
 	
