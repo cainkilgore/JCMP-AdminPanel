@@ -9,6 +9,7 @@ local admins = { }
 local admincount = 0
 
 local invalidArgs = "You have entered invalid arguments."
+local invalidNum = "You have entered an invalid number."
 local nullPlayer = "That player does not exist."
 local kicked = " has been kicked from the server."
 local moneyset = "'s bank account now has $"
@@ -27,6 +28,8 @@ local vehicleKilled = "Your vehicle has been destroyed."
 local notEnoughMoneyKill = "You need at least $100 to destroy your vehicle."
 local steamID = "Your Steam ID is: "
 local playerTeleport = "You teleported to "
+
+local repairCost = 300
 
 local showJoin = true
 local showLeave = true
@@ -171,6 +174,12 @@ function admin:PlayerChat( args )
 				return false
 			end
 			
+			amount = cmd_args[3]
+			if(tonumber(amount) == nil) then
+				deniedMessage(sender, invalidNum)
+				return false
+			end
+			
 			if cmd_args[2] == "*" then
 				for p in Server:GetPlayers() do
 					p:SetMoney(tonumber(cmd_args[3]))
@@ -186,13 +195,19 @@ function admin:PlayerChat( args )
 			end
 			
 			player:SetMoney(tonumber(cmd_args[3]))
-			confirmationMessage(sender, cmd_args[2] .. moneyset .. cmd_args[3])
+			confirmationMessage(sender, player:GetName() .. moneyset .. cmd_args[3])
 			return true
 		end
 		 -- AddMoney 
 		if(cmd_args[1]) == "/addmoney" then
 			if #cmd_args < 2 then
 				deniedMessage(sender, invalidArgs)
+				return false
+			end
+			
+			amount = cmd_args[3]
+			if(tonumber(amount) == nil) then
+				deniedMessage(sender, invalidNum)
 				return false
 			end
 			
@@ -211,7 +226,7 @@ function admin:PlayerChat( args )
 			end
 			
 			player:SetMoney(player:GetMoney() + tonumber(cmd_args[3]))
-			confirmationMessage(sender, cmd_args[2] .. moneyadd .. cmd_args[3])
+			confirmationMessage(sender, player:GetName() .. moneyadd .. cmd_args[3])
 			return true
 		end
 		
@@ -346,9 +361,14 @@ function admin:PlayerChat( args )
 				return false
 			end
 			
-			time = tonumber(cmd_args[2])
-			DefaultWorld:SetTime(time)
-			confirmationMessage(sender, "The server time has been changed to " .. time)
+			time = cmd_args[2]
+			if(tonumber(time) == nil) then
+				deniedMessage(sender, invalidNum)
+				return false
+			end
+			
+			DefaultWorld:SetTime(tonumber(time))
+			confirmationMessage(sender, "The server time has been changed to " .. tonumber(time))
 			return true
 		end
 		
@@ -358,9 +378,14 @@ function admin:PlayerChat( args )
 				return false
 			end
 			
-			weatherSev = tonumber(cmd_args[2])
-			DefaultWorld:SetWeatherSeverity(weatherSev)
-			confirmationMessage(sender, "The worlds weather has been set to " .. weatherSev)
+			weatherSev = cmd_args[2]
+			if(tonumber(weatherSev) == nil) then
+				deniedMessage(sender, invalidNum)
+				return false
+			end
+			
+			DefaultWorld:SetWeatherSeverity(tonumber(weatherSev))
+			confirmationMessage(sender, "The worlds weather has been set to " .. tonumber(weatherSev))
 			return true
 		end
 		
@@ -397,10 +422,10 @@ function admin:PlayerChat( args )
 			deniedMessage(sender, inVehicle)
 			return false
 		end
-		if(args.player:GetMoney() >= 300) then
+		if(args.player:GetMoney() >= repairCost) then
 			veh = args.player:GetVehicle()
 			args.player:GetVehicle():SetHealth(1)
-			args.player:SetMoney(args.player:GetMoney() - 300)
+			args.player:SetMoney(args.player:GetMoney() - repairCost)
 			confirmationMessage(sender, vehicleRepaired)
 			confirmationMessage(sender, "Your vehicle will look damaged, but it's health is repaired.")
 		else
@@ -539,6 +564,20 @@ function admin:PlayerChat( args )
 		else
 			deniedMessage(sender, "You need at least $300 to purchase a pinkmobile.")
 		end
+	end
+	
+	if(cmd_args[1]) == "/server" then
+		local file = io.open("server/server.txt", "r")
+		if file == nil then
+			deniedMessage(sender, "Your server administrator has not setup server.txt.")
+			deniedMessage(sender, "It should be in server/server.txt")
+			return
+		end
+		for line in file:lines() do
+			confirmationMessage(sender, line)
+		end
+		
+		file:close()
 	end
 	
 	if(cmd_args[1]) == "/down" then

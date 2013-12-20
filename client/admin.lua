@@ -34,7 +34,7 @@ function ModulesLoad()
             text = 
                 "This script gives Administrators/Players various uses of gameplay mechanics.\n\n" ..
                 "User Commands: /kill, /repair, /killcar, /id, /ptp <player>, /online, /sky\n" ..
-                "User Commands: /clear, /pinkmobile\n\n" ..
+                "User Commands: /clear, /pinkmobile, /server\n\n" ..
                 "Admin Commands: /kill <player>, /kick <player>, /setmoney <player> <amount>\n" ..
 				"Admin Commands: /forcepassenger <player>, /ptphere */<player>\n" ..
 				"Admin Commands: /ban <player>, /addmoney */<player> <amount>, /clear <player>,\n" ..
@@ -98,6 +98,8 @@ function ModulesLoad()
 				"/notice <message>\n"..
 				"Specify a message and it will print that message out vibisibly to all players on the screen.\n\n"..
 				
+				"/server\n" ..
+				"Shows the contents of server/server.txt in-chat. Useful for MOTD's and such.\n\n"..
 				"If you want to add more administrators, open admins.txt and insert Steam ID's." ..
 				"\n\nVisit the official script's server @ jc-mp.co.uk (IP and Website)"
         } )
