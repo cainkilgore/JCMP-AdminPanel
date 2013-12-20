@@ -400,11 +400,9 @@ function admin:PlayerChat( args )
 		if(args.player:GetMoney() >= 300) then
 			veh = args.player:GetVehicle()
 			args.player:GetVehicle():SetHealth(1)
-			args.player:GetVehicle():Respawn()
-			
-			args.player:EnterVehicle(veh, 0)
 			args.player:SetMoney(args.player:GetMoney() - 300)
 			confirmationMessage(sender, vehicleRepaired)
+			confirmationMessage(sender, "Your vehicle will look damaged, but it's health is repaired.")
 		else
 			deniedMessage(sender, notEnoughMoneyRepair)
 		end
