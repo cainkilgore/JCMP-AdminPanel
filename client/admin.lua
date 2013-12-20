@@ -39,7 +39,7 @@ function ModulesLoad()
 				"Admin Commands: /forcepassenger <player>, /ptphere */<player>\n" ..
 				"Admin Commands: /ban <player>, /addmoney */<player> <amount>, /clear <player>,\n" ..
 				"Admin Commands: /notice <message>\n\n" ..
-				"This Script was created by Cain from jc-mp.com.\nCurrent Version: v0.0.0.7\n\n" ..
+				"This Script was created by Cain from jc-mp.com.\nCurrent Version: v0.0.0.8\n\n" ..
 				
 				"Command Usage: \n" ..
 				"/kill <player> \n" .. 

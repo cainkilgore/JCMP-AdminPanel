@@ -38,7 +38,7 @@ local adminKillReward = true
 timerAdmin = ""
 
 -- Cain's Admin Commands and Functions
--- Version: 0.0.0.7
+-- Version: 0.0.0.8
 
 -- Available Commands:
 -- /kill
@@ -59,6 +59,7 @@ timerAdmin = ""
 -- /clear
 -- /pinkmobile
 -- /down
+-- /server
 
 function admin:loadAdmins(filename)
 	local file = io.open(filename, "r")
