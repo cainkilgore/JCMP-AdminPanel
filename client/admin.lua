@@ -1,6 +1,9 @@
 timer = nil
 
 message = ""
+adminname = "default"
+showMenu = false
+
 RenderMessage = function()
 	
 	if timer then
@@ -9,23 +12,67 @@ RenderMessage = function()
 			(Render.Width - test.x)/6, 
 			(Render.Height - test.y)/6 )
 						
-		Render:DrawText( testpos, message, Color( 255, 210, 0 ),TextSize.Huge / 2)
+		Render:DrawText( testpos, "<" .. adminname .. "> " .. message, Color( 255, 210, 0 ),TextSize.Huge / 2)
 	
 		if timer:GetSeconds() > 10 then
 			timer = nil
 			message = ""
 		end		
 	end
+	
+	if showMenu then
+	
+		-- local file = io.open("server/server.txt", "r")
+		-- if file == nil then
+			-- Render:DrawText(Vector2(Render.Width - 380, Render.Height / 4 + 20), "Your server administrator has not setup server.txt.", Color(255, 0, 0))
+			-- Render:DrawText(Vector2(Render.Width - 380, Render.Height / 4 + 30), "It should be in server/server.txt", Color(255, 0, 0))
+			-- return
+		-- end
+		-- for line in file:lines() do
+			-- confirmationMessage(sender, line)
+		-- end
+		
+		Render:FillArea(Vector2(Render.Width - 400, Render.Height / 4), Vector2(Render.Width - 200, (Render.Height / 2) - 320), Color(0, 0, 0, 127))
+		Render:FillArea(Vector2(Render.Width - 200, Render.Height / 4), Vector2(Render.Width - 200, (Render.Height / 2) - 480), Color(0, 0, 0, 127))
+		Render:DrawText(Vector2(Render.Width - 380, Render.Height / 4 + 20), "Cain's Admin Script", Color(255, 255, 255), 20)
+		Render:DrawText(Vector2(Render.Width - 380, Render.Height / 4 + 40), "Created by Cain from http://jc-mp.com", Color(255, 255, 255))
+		Render:DrawText(Vector2(Render.Width - 380, Render.Height / 4 + 60), "Visit Cain's Server at jc-mp.co.uk", Color(255, 255, 255))
+		Render:DrawText(Vector2(Render.Width - 380, Render.Height / 4 + 80), "Current Script Version: v0.0.0.9", Color(255, 255, 255))
+		Render:DrawText(Vector2(Render.Width - 380, Render.Height / 4 + 100), "F5 and Click 'Cain's  Admin' for Command Help", Color(255, 255, 255))
+		
+		Render:DrawText(Vector2(Render.Width - 140, Render.Height / 2 - 240), "P TO CLOSE", Color(255, 255, 255))
+		
+		
+	end
 
 end
+
+KeyCheck = function(args)
+	if args.key == string.byte("P") then
+		-- Chat:Print("You pressed the P key" , Color(255, 255, 255))
+		if showMenu then
+			showMenu = false
+		else
+			showMenu = true
+		end
+	end
+end
+
 Events:Subscribe("Render", RenderMessage)
+Events:Subscribe("KeyDown", KeyCheck)
 
 ClientFunction = function(sentMessage)
 	timer = Timer()
 	message = sentMessage
 end
+
+GetAdminName = function(sentMessage)
+	adminname = sentMessage
+end
+
 -- Subscribe ClientFunction to the network event "Test".
 Network:Subscribe("Test", ClientFunction)
+Network:Subscribe("Admin", GetAdminName)
 
 function ModulesLoad()
 	Events:FireRegisteredEvent( "HelpAddItem",
@@ -39,7 +86,7 @@ function ModulesLoad()
 				"Admin Commands: /forcepassenger <player>, /ptphere */<player>\n" ..
 				"Admin Commands: /ban <player>, /addmoney */<player> <amount>, /clear <player>,\n" ..
 				"Admin Commands: /notice <message>\n\n" ..
-				"This Script was created by Cain from jc-mp.com.\nCurrent Version: v0.0.0.8\n\n" ..
+				"This Script was created by Cain from jc-mp.com.\nCurrent Version: v0.0.0.9\n\n" ..
 				
 				"Command Usage: \n" ..
 				"/kill <player> \n" .. 

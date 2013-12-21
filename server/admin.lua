@@ -1,6 +1,7 @@
 class 'admin'
 
 local adminPrefix = "[Admin] "
+local name = "Cain's Admin"
 
 -- Change this value to whatever your STEAM ID is! (Type /id in-game)
 
@@ -28,6 +29,7 @@ local vehicleKilled = "Your vehicle has been destroyed."
 local notEnoughMoneyKill = "You need at least $100 to destroy your vehicle."
 local steamID = "Your Steam ID is: "
 local playerTeleport = "You teleported to "
+local paydayCash = 500 -- Change this to 0 to disable Payday
 
 local repairCost = 300
 
@@ -36,17 +38,12 @@ local showLeave = true
 local adminKillReward = true
 
 timerAdmin = ""
+paydayTimer = Timer()
+local timeDelay = 3 -- in minutes
+local paydayCount = 0
 
 -- Cain's Admin Commands and Functions
-<<<<<<< HEAD
-<<<<<<< HEAD
--- Version: 0.0.0.4
-=======
--- Version: 0.0.0.6
->>>>>>> origin/development
-=======
--- Version: 0.0.0.8
->>>>>>> origin/development
+-- Version: 0.0.0.9
 
 -- Available Commands:
 -- /kill
@@ -67,7 +64,6 @@ timerAdmin = ""
 -- /clear
 -- /pinkmobile
 -- /down
--- /server
 
 function admin:loadAdmins(filename)
 	local file = io.open(filename, "r")
@@ -95,9 +91,23 @@ function admin:__init()
 	Events:Subscribe( "PlayerJoin", self, self.PlayerJoin )
 	Events:Subscribe( "PlayerQuit", self, self.PlayerQuit )
 	Events:Subscribe( "PlayerDeath", self, self.PlayerDeath )
-	self:loadAdmins("server/admins.txt")
+	Events:Subscribe( "PostTick", self, self.PostTick )
+	self:loadAdmins("server/admins.txt")	
 end
 
+function admin:PostTick (args)
+	if paydayCash ~= "0" then
+		if(paydayTimer:GetSeconds() > (60 * timeDelay)) then
+			for p in Server:GetPlayers() do
+				p:SetMoney(p:GetMoney() + paydayCash)
+			end
+			paydayCount = paydayCount + 1
+			Chat:Broadcast("[Pay Day-" .. paydayCount .. "] $" .. paydayCash .. " has been paid to everyone's account.", Color(255, 180, 3))
+			paydayTimer:Restart()
+		end
+	end
+end
+	
 function isAdmin( player )
 	local adminstring = ""
 	for i,line in ipairs(admins) do
@@ -334,6 +344,7 @@ function admin:PlayerChat( args )
 			
 			for p in Server:GetPlayers() do
 				Network:Send(p, "Test", stringname)
+				Network:Send(p, "Admin", sender:GetName())
 			end
 		end
 		
