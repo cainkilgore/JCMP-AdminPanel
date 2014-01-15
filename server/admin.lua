@@ -628,6 +628,11 @@ function admin:PlayerChat( args )
 			return false
 		end
 		
+		if string.match(money, "-") then
+			deniedMessage(sender, "You cannot send people a negative balance.")
+			return false
+		end
+		
 		if(sender:GetMoney() >= tonumber(money)) then
 			player:SetMoney(player:GetMoney() + money)
 			sender:SetMoney(sender:GetMoney() - money)
