@@ -96,6 +96,10 @@ function admin:__init()
 end
 
 function admin:PostTick (args)
+	if paydayCash == 0 then
+		return
+	end
+
 	if paydayCash ~= "0" then
 		if(paydayTimer:GetSeconds() > (60 * timeDelay)) then
 			for p in Server:GetPlayers() do
