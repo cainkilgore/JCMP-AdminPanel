@@ -609,6 +609,35 @@ function admin:PlayerChat( args )
 		sender:Teleport(Vector3(pos.x, pos.y - 10,  pos.z), sender:GetAngle())
 		confirmationMessage(sender, "Down we go.")
 	end
+	
+	if(cmd_args[1]) == "/givemoney" then
+		if #cmd_args < 2 then
+			deniedMessage(sender, invalidArgs)
+			return false
+		end
+		
+		player = Player.Match(cmd_args[1])[1]
+		if not isValid(player) then
+			deniedMessage(sender, nullPlayer)
+			return false
+		end
+		
+		money = cmd_args[2]
+		if(tonumber(money) == nil) then
+			deniedMessage(sender, invalidNum)
+			return false
+		end
+		
+		if(sender:GetMoney() >= money) then
+			player:SetMoney(player:GetMoney() + money)
+			sender:SetMoney(sender:GetMoney() - money)
+			confirmationMessage(sender, "You have sent $" .. money .. " to " .. player:GetName() .. "'s account.")
+			confirmationMessage(player, sender:GetName() .. " has sent you $" .. money)
+			return true
+		else 
+			deniedMessage(sender, "You have insufficient funds to do this.")
+		end
+	end
 		
 	
 	if(isAdmin(args.player)) then
