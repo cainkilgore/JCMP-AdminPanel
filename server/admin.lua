@@ -611,24 +611,24 @@ function admin:PlayerChat( args )
 	end
 	
 	if(cmd_args[1]) == "/givemoney" then
-		if #cmd_args < 2 then
+		if #cmd_args < 3 then
 			deniedMessage(sender, invalidArgs)
 			return false
 		end
 		
-		player = Player.Match(cmd_args[1])[1]
-		if not isValid(player) then
+		player = Player.Match(cmd_args[2])[1]
+		if not IsValid(player) then
 			deniedMessage(sender, nullPlayer)
 			return false
 		end
 		
-		money = cmd_args[2]
+		money = cmd_args[3]
 		if(tonumber(money) == nil) then
 			deniedMessage(sender, invalidNum)
 			return false
 		end
 		
-		if(sender:GetMoney() >= money) then
+		if(sender:GetMoney() >= tonumber(money)) then
 			player:SetMoney(player:GetMoney() + money)
 			sender:SetMoney(sender:GetMoney() - money)
 			confirmationMessage(sender, "You have sent $" .. money .. " to " .. player:GetName() .. "'s account.")
